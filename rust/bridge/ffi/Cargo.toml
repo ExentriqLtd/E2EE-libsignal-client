@@ -1,0 +1,32 @@
+#
+# Copyright (C) 2020-2021 Signal Messenger, LLC.
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+
+[package]
+name = "libsignal-ffi"
+version = "0.8.3"
+authors = ["Jack Lloyd <jack@signal.org>"]
+edition = "2018"
+license = "AGPL-3.0-only"
+
+[lib]
+name = "signal_ffi"
+crate-type = ["staticlib"]
+
+[features]
+default = ["armv8"]
+armv8 = ["libsignal-protocol/armv8", "signal-crypto/armv8"]
+
+[dependencies]
+libsignal-protocol = { path = "../../protocol" }
+device-transfer = { path = "../../device-transfer" }
+signal-crypto = { path = "../../crypto" }
+libsignal-bridge = { path = "../shared", features = ["ffi"] }
+async-trait = "0.1.41"
+cpufeatures = "0.1.5" # Make sure iOS gets optimized crypto.
+futures-util = "0.3"
+libc = "0.2"
+rand = "0.7.3"
+log = "0.4"
+log-panics = { version = "2.0.0", features = ["with-backtrace"] }

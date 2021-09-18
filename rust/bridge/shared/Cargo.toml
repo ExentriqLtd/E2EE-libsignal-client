@@ -1,0 +1,39 @@
+#
+# Copyright (C) 2020 Signal Messenger, LLC.
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+
+[package]
+name = "libsignal-bridge"
+version = "0.1.0"
+authors = ["Jack Lloyd <jack@signal.org>", "Jordan Rose <jrose@signal.org>"]
+edition = "2018"
+license = "AGPL-3.0-only"
+
+[dependencies]
+libsignal-protocol = { path = "../../protocol" }
+signal-crypto = { path = "../../crypto" }
+device-transfer = { path = "../../device-transfer" }
+libsignal-bridge-macros = { path = "macros" }
+aes-gcm-siv = "0.10.1"
+futures-util = "0.3.7"
+log = "0.4"
+paste = "1.0"
+rand = "0.7.3"
+static_assertions = "1.1"
+scopeguard = "1.0"
+async-trait = "0.1.41"
+uuid = "0.8"
+
+libc = { version = "0.2", optional = true }
+jni_crate = { version = "0.19", package = "jni", optional = true }
+neon = { version = "0.9", optional = true, default-features = false, features = ["napi-6"] }
+linkme = { version = "0.2.4", optional = true }
+signal-neon-futures = { path = "../node/futures", optional = true }
+
+[features]
+default = ["armv8"]
+ffi = ["libc", "libsignal-bridge-macros/ffi"]
+jni = ["jni_crate", "libsignal-bridge-macros/jni"]
+node = ["neon", "linkme", "signal-neon-futures", "libsignal-bridge-macros/node"]
+armv8 = ["aes-gcm-siv/armv8", "libsignal-protocol/armv8", "signal-crypto/armv8"]

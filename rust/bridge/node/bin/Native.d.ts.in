@@ -1,0 +1,43 @@
+//
+// Copyright 2020-2021 Signal Messenger, LLC.
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+// WARNING: this file was automatically generated
+
+type Uuid = Buffer;
+
+export abstract class IdentityKeyStore {
+  _getIdentityKey(): Promise<PrivateKey>;
+  _getLocalRegistrationId(): Promise<number>;
+  _saveIdentity(name: ProtocolAddress, key: PublicKey): Promise<boolean>;
+  _isTrustedIdentity(name: ProtocolAddress, key: PublicKey, sending: boolean): Promise<boolean>;
+  _getIdentity(name: ProtocolAddress): Promise<PublicKey | null>;
+}
+
+export abstract class SessionStore {
+  _saveSession(addr: ProtocolAddress, record: SessionRecord): Promise<void>;
+  _getSession(addr: ProtocolAddress): Promise<SessionRecord | null>;
+}
+
+export abstract class PreKeyStore {
+  _savePreKey(preKeyId: number, record: PreKeyRecord): Promise<void>;
+  _getPreKey(preKeyId: number): Promise<PreKeyRecord>;
+  _removePreKey(preKeyId: number): Promise<void>;
+}
+
+export abstract class SignedPreKeyStore {
+  _saveSignedPreKey(signedPreKeyId: number, record: SignedPreKeyRecord): Promise<void>;
+  _getSignedPreKey(signedPreKeyId: number): Promise<SignedPreKeyRecord>;
+}
+
+export abstract class SenderKeyStore {
+  _saveSenderKey(sender: ProtocolAddress, distributionId: Uuid, record: SenderKeyRecord): Promise<void>;
+  _getSenderKey(sender: ProtocolAddress, distributionId: Uuid): Promise<SenderKeyRecord | null>;
+}
+
+interface Wrapper<T> {
+  readonly _nativeHandle: T
+}
+
+export function registerErrors(errorsModule: Record<string, unknown>): void;

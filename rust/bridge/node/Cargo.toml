@@ -1,0 +1,29 @@
+#
+# Copyright (C) 2020-2021 Signal Messenger, LLC.
+# SPDX-License-Identifier: AGPL-3.0-only
+#
+
+[package]
+name = "libsignal-node"
+version = "0.8.3"
+authors = ["Jordan Rose <jrose@signal.org>", "Jack Lloyd <jack@signal.org>"]
+license = "AGPL-3.0-only"
+edition = "2018"
+
+[lib]
+name = "signal_node"
+crate-type = ["cdylib"]
+
+[features]
+default = ["armv8"]
+armv8 = ["libsignal-protocol/armv8", "libsignal-bridge/armv8"]
+
+[dependencies]
+libsignal-protocol = { path = "../../protocol" }
+libsignal-bridge = { path = "../shared", features = ["node"] }
+signal-neon-futures = { path = "futures" }
+neon = { version = "0.9", default-features = false, features = ["napi-6", "channel-api"] }
+rand = "0.7.3"
+log = "0.4"
+log-panics = { version = "2.0.0", features = ["with-backtrace"] }
+async-trait = "0.1.41"

@@ -1,0 +1,24 @@
+[workspace]
+members = [
+    "rust/crypto",
+    "rust/device-transfer",
+    "rust/poksho",
+    "rust/protocol",
+    "rust/bridge/ffi",
+    "rust/bridge/jni",
+    "rust/bridge/node",
+]
+default-members = [
+    "rust/crypto",
+    "rust/device-transfer",
+    "rust/poksho",
+    "rust/protocol",
+]
+
+[patch.crates-io]
+curve25519-dalek = { git = 'https://github.com/signalapp/curve25519-dalek', branch = '3.0.0-lizard2' }
+
+[profile.dev.package.num-bigint-dig]
+opt-level = 2 # too slow otherwise!
+
+openssl = "0.10.35"
